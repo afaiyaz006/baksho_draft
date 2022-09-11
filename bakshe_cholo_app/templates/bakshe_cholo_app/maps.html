@@ -1,0 +1,19 @@
+{% extends 'bakshe_cholo_app/base.html' %}
+
+    {% block content %}
+    {% if user.is_authenticated %}
+        Welcome {{user.username}}
+        <head>
+          <meta charset="UTF-8">
+          <title>Map</title>
+        </head>
+        <card>
+          <div> {{ map | safe }}</div>
+      
+        </card>
+    
+    {%endif%}
+    
+ 
+    
+{% endblock %}
