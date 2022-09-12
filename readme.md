@@ -1,8 +1,9 @@
-#bakshe Cholo Draft<br>
+<h3>bakshe Cholo Draft</h3>
 
 Usage Instruction:
 ```
 git clone https://github.com/afaiyaz006/baksho_draft
+cd baksho_draft
 pipenv shell
 pipenv sync
 python manage.py makemigrations
