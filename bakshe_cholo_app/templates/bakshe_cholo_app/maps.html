@@ -2,15 +2,15 @@
 
     {% block content %}
     {% if user.is_authenticated %}
-        Welcome {{user.username}}
+        <h1>Welcome {{user.username}}</h1>
         <head>
           <meta charset="UTF-8">
           <title>Map</title>
         </head>
-        <card>
+        <article class='grid'>
           <div> {{ map | safe }}</div>
       
-        </card>
+        </article>
     
     {%endif%}
     

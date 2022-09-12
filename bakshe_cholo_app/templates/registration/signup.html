@@ -1,0 +1,22 @@
+{% extends 'bakshe_cholo_app/base.html' %}
+{% block content %}
+{% if user.is_authenticated %}
+<h1>Sign up</h1>
+  <article>
+  
+  <form method="post">
+  <table>
+    {% csrf_token %}
+  
+    {{ form.as_table }}
+   
+  </table>
+  <figure>
+  <button type="submit">Sign Up</button>
+  </figure>
+  </form>
+</article>
+{% else %}
+<h1> Already Logged in </h1>
+{% endif %}
+{% endblock %}

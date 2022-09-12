@@ -1,0 +1,15 @@
+{% extends 'bakshe_cholo_app/base.html' %}
+{% block content %}
+    {% if user.is_authenticated %}
+        <article>
+        <h1>Hi {{user.username}}!<h1><br>
+        <a href="{% url 'coordinates-form'%}" role="button">Select your coordinates</a>
+        </article>
+    {% else %}
+    <article class='grid'>
+        <a href="{% url 'login' %}" ><button>Login</button></a>
+        <a href="{% url 'signup' %}" ><button> Signup </button></a>
+    </article>
+    {% endif %}
+    
+{% endblock %}
