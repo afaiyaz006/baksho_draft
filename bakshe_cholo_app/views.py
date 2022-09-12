@@ -14,6 +14,11 @@ def home(request):
 
 @login_required
 def coordinates_form(request):
+    '''
+    This is hugely unoptimized  as the coordinates are stored multiple times in multiple instance
+    will change it later.
+    '''
+    
     coordinates = User_Coordinates()
     form = UserCoordinatesForm()
 
@@ -37,14 +42,32 @@ def coordinates_form(request):
 def maps(request):
 
     ### bus driver locations will be added here....
-    
-
-
+    bus_drivers=Profile.objects.filter(user_type='Bus Driver')
+    drivers_coordinates=[]
+    for driver in bus_drivers:
+        loc=User_Coordinates.objects.filter(designation=driver.user).latest('created_at')
+        if loc:
+            coord=[loc.lon,loc.lat]
+            drivers_coordinates.append(coord)
+        
     coordinates = User_Coordinates.objects.filter(designation=request.user).latest('created_at') # get latest location submitted by user
     coordinates=[coordinates.lon,coordinates.lat]
-    print(coordinates)
+    #print(coordinates)
+    
     map = folium.Map(coordinates)
-    folium.Marker(coordinates).add_to(map)
+
+    user_tooltip="User tooltip"
+    bus_tooltip="Bus Tooltip"
+    
+    folium.Marker(coordinates,popup="<i>This is you</i>", tooltip=user_tooltip,icon=folium.Icon(color="green")).add_to(map) # user coordinates
+    
+    #adding driver coordinate
+    counter=1
+    for coord in drivers_coordinates:
+
+        folium.Marker(coord,popup="<i> DoyalBus "+str(counter)+" </i>",tooltip=bus_tooltip,icon=folium.Icon(color="red")).add_to(map)
+    
+    
     folium.raster_layers.TileLayer('Stamen Terrain').add_to(map)
     folium.raster_layers.TileLayer('Stamen Toner').add_to(map)
     folium.raster_layers.TileLayer('Stamen Watercolor').add_to(map)

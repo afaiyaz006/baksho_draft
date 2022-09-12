@@ -1,6 +1,8 @@
 {% extends 'bakshe_cholo_app/base.html' %}
 {% block content %}
 {% if user.is_authenticated %}
+<h1> Already Logged in </h1>
+{% else %}
 <h1>Sign up</h1>
   <article>
   
@@ -16,7 +18,6 @@
   </figure>
   </form>
 </article>
-{% else %}
-<h1> Already Logged in </h1>
+
 {% endif %}
 {% endblock %}
