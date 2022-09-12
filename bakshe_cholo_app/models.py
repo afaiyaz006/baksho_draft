@@ -3,17 +3,19 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+
 # Create your models here.
-regularUser='ru'
-busdriver='bdr'
+regularUser='Regular User'
+busdriver='Bus Driver'
 UserType = [
-    (regularUser,'Bus Driver'),
-    (busdriver,'Regular User'),
+    (regularUser,'Regular User'),
+    (busdriver,'Bus Driver'),
 ]
 class User_Coordinates(models.Model):
     designation=models.ForeignKey(User,on_delete=models.CASCADE,null=True)
     lat = models.FloatField(max_length=20)
     lon = models.FloatField(max_length=20)
+    created_at = models.DateTimeField(auto_now_add=True)
 
 
 class Profile(models.Model):

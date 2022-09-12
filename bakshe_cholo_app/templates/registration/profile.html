@@ -1,11 +1,14 @@
 {% extends 'bakshe_cholo_app/base.html' %}
-{% if user.is_authenticated%}
+{% block content %}
+{% if user.is_authenticated %}
+    <h1> user logged in</h1>
     <article class='grid'>
         <table>
-            <tr> Name : {{user.username}} </tr>
+            <tr> Name : {{user.username}} </tr><br>
             <tr> User is a : {{user.profile.user_type}} </tr>
         </table>
     </article>
 {% else %}
 <h1>Login to view</h1>
 {% endif %}
+{% endblock %}

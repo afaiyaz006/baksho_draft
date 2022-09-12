@@ -37,7 +37,10 @@ def coordinates_form(request):
 def maps(request):
 
     ### bus driver locations will be added here....
-    coordinates = list(User_Coordinates.objects.filter(designation=request.user))[0]
+    
+
+
+    coordinates = User_Coordinates.objects.filter(designation=request.user).latest('created_at') # get latest location submitted by user
     coordinates=[coordinates.lon,coordinates.lat]
     print(coordinates)
     map = folium.Map(coordinates)
