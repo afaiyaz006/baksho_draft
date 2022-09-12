@@ -35,6 +35,8 @@ def coordinates_form(request):
     
 @login_required
 def maps(request):
+
+    ### bus driver locations will be added here....
     coordinates = list(User_Coordinates.objects.filter(designation=request.user))[0]
     coordinates=[coordinates.lon,coordinates.lat]
     print(coordinates)
