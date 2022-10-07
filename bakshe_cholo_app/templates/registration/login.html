@@ -1,36 +1,97 @@
-{% extends 'bakshe_cholo_app/base.html' %}
+<!doctype html>
+<html lang="en">
 
-{% block content %}
-  <h1>Please Login </h1>
-  {% if form.errors %}
-    <code>Your username and password didn't match. Please try again.</code>
-  {% endif %}
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sign in example • Pico.css</title>
+    <meta name="description" content="A minimalist layout for Login pages. Built with Pico CSS.">
+    
+    <link rel="shortcut icon" href="https://picocss.com/favicon.ico">
+    <link rel="canonical" href="https://picocss.com/examples/sign-in/">
 
-  {% if next %}
-    {% if user.is_authenticated %}
-      <p>Your account doesn't have access to this page. To proceed,
-      please login with an account that has access.</p>
-    {% else %}
-      <p>Please login to see this page.</p>
-    {% endif %}
-  {% endif %}
-  <article display='grid'>
-  <form method="post" action="{% url 'login' %}">
-    {% csrf_token %}
-    <table>
-      <tr>
-        <td>{{ form.username.label_tag }}</td>
-        <td>{{ form.username }}</td>
-      </tr>
-      <tr>
-        <td>{{ form.password.label_tag }}</td>
-        <td>{{ form.password }}</td>
-      </tr>
-    </table>
-    <input type="submit" value="login">
-    <input type="hidden" name="next" value="{{ next }}">
-  </form>
-</article>
-  
-  
-{% endblock %}
+    <!-- Pico.css -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+    <link rel="stylesheet" href="{% static 'css/pico.min.css' %}">
+
+    <!-- Custom styles for this example -->
+    <link rel="stylesheet" href="custom.css">
+  </head>
+
+  <body>
+
+    <!-- Nav -->
+    <nav class="container-fluid">
+      <ul>
+        <li><a href="./" class="contrast" onclick="event.preventDefault()"><strong>Brand</strong></a></li>
+      </ul>
+      <ul>
+        <li>
+          <details role="list" dir="rtl">
+            <summary aria-haspopup="listbox" role="link" class="secondary">Theme</summary>
+            <ul role="listbox">
+              <li><a href="#" data-theme-switcher="auto">Auto</a></li>
+              <li><a href="#" data-theme-switcher="light">Light</a></li>
+              <li><a href="#" data-theme-switcher="dark">Dark</a></li>
+            </ul>
+          </details>
+        </li>
+        <li>
+          <details role="list" dir="rtl">
+            <summary aria-haspopup="listbox" role="link" class="secondary">Examples</summary>
+            <ul role="listbox">
+              <li><a href="../preview/">Preview</a></li>
+              <li><a href="../preview-rtl/">Right-to-left</a></li>
+              <li><a href="../classless/">Class-less</a></li>
+              <li><a href="../basic-template/">Basic template</a></li>
+              <li><a href="../company/">Company</a></li>
+              <li><a href="../google-amp/">Google Amp</a></li>
+              <li><a href="../sign-in/">Sign in</a></li>
+              <li><a href="../bootstrap-grid/">Bootstrap grid</a></li>
+            </ul>
+          </details>
+        </li>
+      </ul>
+    </nav><!-- ./ Nav -->
+
+    <!-- Main -->
+    <main class="container">
+      <article class="grid">
+        <div>
+          <hgroup>
+            <h1>Sign in</h1>
+            <h2>A minimalist layout for Login pages</h2>
+          </hgroup>
+          <form method="post" action="{% url 'login' %}">
+            {% csrf_token %}
+            <table>
+              <tr>
+                <td>{{ form.username.label_tag }}</td>
+                <td>{{ form.username }}</td>
+              </tr>
+              <tr>
+                <td>{{ form.password.label_tag }}</td>
+                <td>{{ form.password }}</td>
+              </tr>
+            </table>
+            <input type="submit" value="login">
+            <input type="hidden" name="next" value="{{ next }}">
+          </form>
+          <a href="{% url 'signup' %}" role="button" class="outline">Signup</a>
+        </div>
+        <div></div>
+      </article>
+    </main><!-- ./ Main -->
+
+    <!-- Footer -->
+    <footer class="container-fluid">
+      <small>Built with <a href="https://picocss.com" class="secondary">Pico</a> • <a href="https://github.com/picocss/examples/tree/master/sign-in/" class="secondary">Source code</a></small>
+    </footer><!-- ./ Footer -->
+
+    <!-- Minimal theme switcher -->
+    <script src="../js/minimal-theme-switcher.js"></script>
+
+  </body>
+
+</html>
