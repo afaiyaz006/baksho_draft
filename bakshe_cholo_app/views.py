@@ -123,3 +123,6 @@ def profile(request):
     profile view
     '''
     return render(request,'registration/profile.html')
+
+def test(request):
+    pass
