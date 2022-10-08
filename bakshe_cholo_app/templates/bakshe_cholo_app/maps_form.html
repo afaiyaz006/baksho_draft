@@ -6,18 +6,39 @@
 
 </div>
 {% if user.is_authenticated %}
+
+
+
 <h1>Select your location </h1>
+
 <div class="card-body">
     <form method= "POST" action ="">
          {% csrf_token %}
          {{form.as_p}}
          <input class="button" type="submit" value="submit">
     </form>
-
-
+</div>
+<h1> Your recent locations </h1>
+<div container="grid">
+{% for data in coordinates %}
+    <div>
+    Name: {{user.username}}
+    Lat: {{data.lat}}
+    Lon: {{data.lon}}
+    <a href="#" role="button" class="outline" onclick="show_data({{data.lat}},{{data.lon}})">Select</a>
+    <!--button  size="20%" onclick="show_data({{data.lat}},{{data.lon}})">Select Coordinate</button-->
+    </div>
+    <br>
+{% endfor %}
 </div>
 {%else%}
    <h1> Login to continue </h1>
 {% endif %}
-
+<script>
+    function show_data(coord_a,coord_b){
+        document.getElementById("id_lat").value = coord_a;
+        document.getElementById("id_lon").value = coord_b;
+        return true;
+    }
+</script>
 {% endblock %}

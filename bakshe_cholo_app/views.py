@@ -32,10 +32,17 @@ def coordinates_form(request):
            coordinates.lon=form.cleaned_data['lon']
            coordinates.save()
         return redirect("maps")
+    
+    '''
+    grab latest submitted user coordinate of the currently logged in user and show the recent 5 coordinate as recent position
+    '''
+    recent_coordinates=User_Coordinates.objects.filter(designation=request.user).order_by('-created_at')
+    recent_coordinates=recent_coordinates[:5]
     context = {
-        'coordinates': coordinates,
+        'coordinates': recent_coordinates,
         'form' : form,
     }
+
     return render(request, 'bakshe_cholo_app/maps_form.html', context)
     
 @login_required
