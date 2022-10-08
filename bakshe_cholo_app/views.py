@@ -65,14 +65,18 @@ def maps(request):
     
 
 
-    folium.Marker(coordinates,popup="<i>This is you</i>", tooltip=user_tooltip,icon=folium.Icon(color="green")).add_to(map) # user coordinates
+    #user coordinate
+    folium.Marker(coordinates,popup="👤<i>User</i>", tooltip=user_tooltip,icon=folium.Icon(color="blue")).add_to(map) 
+   
+   
     #adding driver coordinate
     counter=1
     for coord in drivers_coordinates:
 
-        folium.Marker(coord,popup="<i> Doyalbus "+str(counter)+" </i>",tooltip=bus_tooltip,icon=folium.Icon(color="red")).add_to(map)
+        folium.Marker(coord,popup="🚌<i> BusDriver"+str(counter)+" </i>",tooltip=bus_tooltip,icon=folium.Icon(color="red")).add_to(map)
         folium.PolyLine(locations=[coord,coordinates], color='red').add_to(map)
         counter+=1
+    
     
     
     folium.raster_layers.TileLayer('Stamen Terrain').add_to(map)

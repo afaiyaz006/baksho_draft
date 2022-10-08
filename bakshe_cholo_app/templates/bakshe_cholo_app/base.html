@@ -2,11 +2,15 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
+    
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <link rel="stylesheet" href="{% static 'css/pico.min.css' %}">
+
     <title>Bakshe Cholo</title>
   </head>
   <body>
-
     <nav class='container-fluid'>
       <ul>
         <li><strong>Bakshe Cholo</strong></li>
