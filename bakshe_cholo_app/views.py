@@ -5,8 +5,8 @@ from .forms import *
 import folium
 from django.contrib.auth import login,authenticate
 from django.contrib.auth.decorators import login_required
-from .location_engine import LocationWorker
-location_worker=LocationWorker('walk','time')
+
+
 # Create your views here.
 
 def home(request):
@@ -47,37 +47,41 @@ def coordinates_form(request):
     
 @login_required
 def maps(request):
+
     ### bus driver locations will be added here....
     bus_drivers=Profile.objects.filter(user_type='Bus Driver')
     drivers_coordinates=[]
     for driver in bus_drivers:
         loc=User_Coordinates.objects.filter(designation=driver.user).latest('created_at')
         if loc:
-            coord=(loc.lat,loc.lon)
+            coord=[loc.lon,loc.lat]
             drivers_coordinates.append(coord)
         
     coordinates = User_Coordinates.objects.filter(designation=request.user).latest('created_at') # get latest location submitted by user
-    user_coordinates=(coordinates.lat,coordinates.lon)
+    coordinates=[coordinates.lon,coordinates.lat]
     #print(coordinates)
-    shortest_routes=[]
-    for driver_coordinate in drivers_coordinates:
-        shortest_route=location_worker.calculate_shorted_distance(driver_coordinate,user_coordinates)
-        shortest_routes.append(shortest_route)
-    print(shortest_routes)
-    map=location_worker.make_route(shortest_routes)
     
+    map = folium.Map(coordinates)
+
     user_tooltip="User tooltip"
     bus_tooltip="Bus Tooltip"
+
+    #coordinate for destination
+    destination_coordinate=[90,23.2929392]
+    folium.Marker(destination_coordinate,draggable=True,icon=folium.Icon(color="purple")).add_to(map)
     
+
+
     #user coordinate
-    folium.Marker([user_coordinates[1],user_coordinates[0]],popup="👤<i>User</i>", tooltip=user_tooltip,icon=folium.Icon(color="blue")).add_to(map) 
+    folium.Marker(coordinates,popup="👤<i>User</i>", tooltip=user_tooltip,icon=folium.Icon(color="blue")).add_to(map) 
    
    
     #adding driver coordinate
     counter=1
     for coord in drivers_coordinates:
 
-        folium.Marker([coord[1],coord[0]],popup="🚌<i> BusDriver"+str(counter)+" </i>",tooltip=bus_tooltip,icon=folium.Icon(color="red")).add_to(map)
+        folium.Marker(coord,popup="🚌<i> BusDriver"+str(counter)+" </i>",tooltip=bus_tooltip,icon=folium.Icon(color="red")).add_to(map)
+        folium.PolyLine(locations=[coord,coordinates], color='red').add_to(map)
         counter+=1
     
     
@@ -114,3 +118,11 @@ def signup(request):
         form=SignupForm()
         
     return render(request,'registration/signup.html',{'form':form})
+def profile(request):
+    '''
+    profile view
+    '''
+    return render(request,'registration/profile.html')
+
+def test(request):
+    pass
