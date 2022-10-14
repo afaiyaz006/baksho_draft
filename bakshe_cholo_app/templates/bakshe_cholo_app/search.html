@@ -1,0 +1,25 @@
+{% extends 'bakshe_cholo_app/base.html' %}
+{%  block content  %}
+<main class='container'>
+<form method="get" action="{% url 'search' %}">
+    <input type="search" id="search" placeholder="Search" name="sq">
+    <br><button type="submit">Submit</button>
+</form> 
+{% if buses %}
+    
+<article aria-label="Card example">
+        <figure>
+        <table>
+        {% for bus in buses %}
+            <tr><td>{{bus.bus_title}}</td></tr>
+            <tr><td>{{bus.bus_route}}</td></tr>
+            <tr><td>{{bus.bus_sits}}</td></tr>
+            <br>
+        {% endfor %}
+        </table>
+        </figure>
+</article>
+{% endif %}
+
+</main>
+{% endblock %}
