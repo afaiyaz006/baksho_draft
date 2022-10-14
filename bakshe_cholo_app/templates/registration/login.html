@@ -75,9 +75,16 @@
           <a href="{% url 'signup' %}" role="button" >Signup</a>
           {% endblock %}
         </div>
-        <div></div>
+        <!-- image load -->
+        <div>
+          {% load static %}
+          <img src="{% static 'image/image3.png' %}"  alt="Bus Stoppage">
+          <img src="{% static 'image/image1.png' %}"  alt="Peoples Entering Bus">
+
+        </div>
       </article>
-    </main><!-- ./ Main -->
+    </main>
+    <!-- ./ Main -->
 
  
 

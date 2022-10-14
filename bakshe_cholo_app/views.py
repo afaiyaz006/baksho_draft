@@ -49,23 +49,28 @@ def coordinates_form(request):
 def maps(request):
     ### bus driver locations will be added here....
     bus_drivers=Profile.objects.filter(user_type='Bus Driver')
+    
     drivers_coordinates=[]
     for driver in bus_drivers:
-        loc=User_Coordinates.objects.filter(designation=driver.user).latest('created_at')
+        loc=User_Coordinates.objects.filter(designation=driver.user).order_by('created_at').last()
+        print(loc)
+        
         if loc:
             coord=(loc.lat,loc.lon)
             drivers_coordinates.append(coord)
         
-    coordinates = User_Coordinates.objects.filter(designation=request.user).latest('created_at') # get latest location submitted by user
+    coordinates = User_Coordinates.objects.filter(designation=request.user).order_by('created_at').last() # get latest location submitted by user
     user_coordinates=(coordinates.lat,coordinates.lon)
     #print(coordinates)
     shortest_routes=[]
     for driver_coordinate in drivers_coordinates:
         shortest_route=location_worker.calculate_shorted_distance(driver_coordinate,user_coordinates)
-        shortest_routes.append(shortest_route)
+        if shortest_route:
+            shortest_routes.append(shortest_route)
     print(shortest_routes)
     map=location_worker.make_route(shortest_routes)
-    
+    if map==None:
+        map = folium.Map(location=[90,23])
     user_tooltip="User tooltip"
     bus_tooltip="Bus Tooltip"
     

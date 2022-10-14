@@ -1,7 +1,8 @@
+from tkinter import E
 import osmnx as ox
 import networkx as nx
 import os
-
+import folium
 class LocationWorker:
     '''
         Location API for easy interfacing
@@ -14,21 +15,32 @@ class LocationWorker:
         self.graph=ox.graph_from_xml(self.file_path,simplify=True,retain_all=False)
 
     def calculate_shorted_distance(self,loc_a,loc_b):
-        loc_a_node=ox.nearest_nodes(self.graph,loc_a[0],loc_a[1])
-        loc_b_node=ox.nearest_nodes(self.graph,loc_b[0],loc_b[1])
+        try:
+            loc_a_node=ox.nearest_nodes(self.graph,loc_a[0],loc_a[1])
+            loc_b_node=ox.nearest_nodes(self.graph,loc_b[0],loc_b[1])
         
-        shortest_route = nx.shortest_path(self.graph,
+            shortest_route = nx.shortest_path(self.graph,
                                   loc_a_node,
                                   loc_b_node,
                                   weight=self.optimizer)
-        
+        except:
+            return None
         return shortest_route
     
     def make_route(self,shortest_routes):
+        
         if len(shortest_routes)>0:
-            map=ox.plot_route_folium(self.graph,shortest_routes[0])
+            map=None
+            try:
+                map=ox.plot_route_folium(self.graph,shortest_routes[0])
+            except:
+                print("Shortest path not")
             for i in range(1,len(shortest_routes)):
-                map = ox.plot_route_folium(self.graph,shortest_routes[i],route_map=map)
+                try:
+                    map = ox.plot_route_folium(self.graph,shortest_routes[i],route_map=map)
+                except:
+                    print("Shortest route not found!")
+
             return map
         else:
             return None
