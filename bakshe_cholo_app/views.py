@@ -1,6 +1,6 @@
 
 from django.shortcuts import render, redirect
-from .models import User_Coordinates,Profile
+from .models import User_Coordinates,Profile,Bus
 from .forms import *
 import folium
 from django.contrib.auth import login,authenticate
@@ -114,3 +114,11 @@ def signup(request):
         form=SignupForm()
         
     return render(request,'registration/signup.html',{'form':form})
+
+def searchView(request):
+    if request.GET:
+        search_query=request.GET['sq']
+        buses=Bus.objects.filter(bus_title__icontains=search_query)
+        return render(request,'bakshe_cholo_app/search.html',{'buses':buses})
+    else:
+        return render(request,'bakshe_cholo_app/search.html')
