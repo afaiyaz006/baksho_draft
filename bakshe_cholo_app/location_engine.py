@@ -34,7 +34,7 @@ class LocationWorker:
             try:
                 map=ox.plot_route_folium(self.graph,shortest_routes[0])
             except:
-                print("Shortest path not")
+                print("Shortest path not found")
             for i in range(1,len(shortest_routes)):
                 try:
                     map = ox.plot_route_folium(self.graph,shortest_routes[i],route_map=map)
