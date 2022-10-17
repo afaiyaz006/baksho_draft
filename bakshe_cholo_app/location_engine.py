@@ -11,7 +11,7 @@ class LocationWorker:
         ox.config(log_console=True,use_cache=True)
         self.mode=mode
         self.optimizer=optimizer
-        self.file_path=os.path.dirname(os.path.realpath('osm_files/UAP_To_Farmgate.osm'))+"\\UAP_To_Farmgate.osm"
+        self.file_path=os.path.dirname(os.path.realpath('osm_files/Panthapath_to_Dhanmondi.osm'))+"\\Panthapath_to_Dhanmondi.osm"
         self.graph=ox.graph_from_xml(self.file_path,simplify=True,retain_all=False)
 
     def calculate_shorted_distance(self,loc_a,loc_b):
