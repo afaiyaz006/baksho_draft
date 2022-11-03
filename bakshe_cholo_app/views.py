@@ -6,7 +6,7 @@ import folium
 from django.contrib.auth import login,authenticate
 from django.contrib.auth.decorators import login_required
 from .location_engine import LocationWorker
-location_worker=LocationWorker('walk','time')
+location_worker=LocationWorker('drive','time')
 # Create your views here.
 
 def home(request):
