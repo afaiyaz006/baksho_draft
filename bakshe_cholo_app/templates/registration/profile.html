@@ -3,6 +3,7 @@
 {% if user.is_authenticated %}
     <h1> user logged in</h1>
     <article class='grid'>
+        <!--this page will table will be displayed after user is logged in-->
         <table>
             <tr> Name : {{user.username}} </tr><br>
             <tr> User is a : {{user.profile.user_type}} </tr>
